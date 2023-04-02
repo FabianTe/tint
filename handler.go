@@ -158,6 +158,27 @@ func (h *handler) appendAttr(buf *buffer, attr slog.Attr) {
 		}
 	}
 
+	if attr.Value.Kind() == slog.KindGroup {
+		attrs := attr.Value.Group()
+
+		if len(attrs) > 0 {
+			// TODO: The implementation in x/exp used this
+			// Inline a group with an empty key.
+			//if a.Key != "" {
+			//	s.openGroup(a.Key)
+			//}
+			for _, aa := range attrs {
+				h.appendAttr(buf, aa)
+			}
+			// TODO: The implementation in x/exp used this
+			//if a.Key != "" {
+			//	s.closeGroup(a.Key)
+			//}
+		}
+
+		return
+	}
+
 	h.appendKey(buf, attr.Key)
 	appendValue(buf, attr.Value)
 }
