@@ -3,13 +3,16 @@ package tint_test
 import (
 	"errors"
 	"os"
+	"testing"
 	"time"
 
 	"github.com/lmittmann/tint"
 	"golang.org/x/exp/slog"
 )
 
-func Example() {
+// TestSlog implements a simple example on how to use tint. This test performs no assertions but is still
+// useful to manually inspect how tint handles various slog features.
+func TestSlog(t *testing.T) {
 	slog.SetDefault(slog.New(tint.Options{
 		Level:      slog.LevelDebug,
 		TimeFormat: time.Kitchen,
